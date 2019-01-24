@@ -2,19 +2,24 @@
 #include <algorithm>
 #include <string>
 #include "../PluginAPI.h"
-#include "../OpenGL.h"
+#include <Graphics/Context.h>
+#include "../DisplayWindow.h"
+#include <Graphics/OpenGLContext/GLFunctions.h>
+#include <Graphics/OpenGLContext/opengl_Utils.h>
 #include "../RSP.h"
 
 #ifdef ANDROID
 #include <sys/stat.h>
 #endif
 
+#include <libretro_private.h>
+
 extern retro_environment_t environ_cb;
 
 void retroChangeWindow()
 {
-	video().setToggleFullscreen();
-	video().changeWindow();
+    DisplayWindow::get().setToggleFullscreen();
+    DisplayWindow::get().changeWindow();
 }
 
 int PluginAPI::InitiateGFX(const GFX_INFO & _gfxInfo)

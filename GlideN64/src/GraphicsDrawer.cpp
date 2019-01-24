@@ -37,8 +37,6 @@ GraphicsDrawer::GraphicsDrawer()
 
 GraphicsDrawer::~GraphicsDrawer()
 {
-	while (!m_osdMessages.empty())
-		std::this_thread::sleep_for(Milliseconds(1));
 }
 
 void GraphicsDrawer::addTriangle(int _v0, int _v1, int _v2)
@@ -1519,14 +1517,10 @@ void GraphicsDrawer::drawOSD()
 void GraphicsDrawer::showMessage(std::string _message, Milliseconds _interval)
 {
 	m_osdMessages.emplace_back(_message);
-	std::thread t(&GraphicsDrawer::_removeOSDMessage, this, std::prev(m_osdMessages.end()), _interval);
-	t.detach();
 }
 
 void GraphicsDrawer::_removeOSDMessage(OSDMessages::iterator _iter, Milliseconds _interval)
 {
-	std::this_thread::sleep_for(_interval);
-	m_osdMessages.erase(_iter);
 }
 
 void GraphicsDrawer::clearDepthBuffer()
